@@ -120,6 +120,7 @@ AC_SUBST(DIRECTFB_LIBS)
 AC_SUBST(MODULEDIR)
 AC_SUBST(DIRECTFB_INTERNAL_CFLAGS)
 
+CFLAGS="$CFLAGS -Werror-implicit-function-declarations"
 
 AC_OUTPUT([
 divine-config
