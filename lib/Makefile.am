@@ -1,6 +1,6 @@
 INCLUDES = \
 	-I$(top_srcdir)/include	\
-	@DIRECTFB_CFLAGS@ -Wall
+	@DIRECTFB_CFLAGS@
 
 lib_LTLIBRARIES = libdivine.la
 
