@@ -86,7 +86,7 @@ fi
 #
 # Check for DirectFB
 #
-DIRECTFB_REQUIRED_VERSION=0.9.17
+DIRECTFB_REQUIRED_VERSION=0.9.19
 
 AC_MSG_CHECKING(for DirectFB)
   if $PKG_CONFIG --atleast-version $DIRECTFB_REQUIRED_VERSION directfb ; then
@@ -103,11 +103,7 @@ AC_MSG_CHECKING(for DirectFB)
 #
 AC_MSG_CHECKING(for DirectFB-Internal)
   if $PKG_CONFIG --atleast-version $DIRECTFB_REQUIRED_VERSION directfb-internal ; then
-        if test "x$exec_prefix" = xNONE && test "x$prefix" = xNONE; then   
-             MODULEDIR=`$PKG_CONFIG --variable=moduledir directfb-internal`
-        else
-             MODULEDIR=$libdir/directfb-`$PKG_CONFIG --modversion directfb`
-        fi
+        MODULEDIR=$libdir/`$PKG_CONFIG --variable=moduledirname directfb-internal`
         DIRECTFB_INTERNAL_CFLAGS=`$PKG_CONFIG --cflags directfb-internal`
         AC_MSG_RESULT(found)
   else
