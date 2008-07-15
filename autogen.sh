@@ -11,7 +11,7 @@
 
 PROJECT="DiVine"
 TEST_TYPE=-f
-FILE=include/divine.h
+FILE=driver/divine.c
 
 LIBTOOL_REQUIRED_VERSION=1.3.4
 AUTOCONF_REQUIRED_VERSION=2.13
@@ -23,10 +23,21 @@ test -z "$srcdir" && srcdir=.
 ORIGDIR=`pwd`
 cd $srcdir
 
+make_version ()
+{
+    major=`echo $1 | cut -d '.' -f 1`
+    minor=`echo $1 | cut -d '.' -f 2`
+    micro=`echo $1 | cut -d '.' -f 3`
+
+    expr $major \* 65536 + $minor \* 256 + $micro
+}
 
 check_version ()
 {
-    if expr $1 \>= $2 > /dev/null; then
+    ver=`make_version $1.0.0`
+    req=`make_version $2.0.0`
+
+    if test $ver -ge $req; then
 	echo "yes (version $1)"
     else
 	echo "Too old (found version $1)!"
@@ -42,7 +53,7 @@ echo
 DIE=0
 
 echo -n "checking for libtool >= $LIBTOOL_REQUIRED_VERSION ... "
-if (libtool --version) < /dev/null > /dev/null 2>&1; then
+if (libtoolize --version) < /dev/null > /dev/null 2>&1; then
     VER=`libtoolize --version \
          | grep libtool | sed "s/.* \([0-9.]*\)[-a-z0-9]*$/\1/"`
     check_version $VER $LIBTOOL_REQUIRED_VERSION
@@ -111,7 +122,7 @@ case $CC in
 esac
 
 aclocal $ACLOCAL_FLAGS
-libtoolize --automake
+libtoolize --automake --copy --force
 autoconf
 
 # optionally feature autoheader
@@ -121,7 +132,7 @@ automake --add-missing $am_opt
 
 cd $ORIGDIR
 
-$srcdir/configure --enable-maintainer-mode "$@"
+$srcdir/configure --enable-maintainer-mode "$@" || exit
 
 echo 
 echo "Now type 'make' to compile $PROJECT."
