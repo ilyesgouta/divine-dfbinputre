@@ -1,4 +1,4 @@
-SUBDIRS = include lib driver examples
+SUBDIRS = include lib driver examples proxy rules
 
 bin_SCRIPTS = divine-config
 

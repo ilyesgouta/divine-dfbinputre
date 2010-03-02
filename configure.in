@@ -73,6 +73,9 @@ if test "x$GCC" = xyes; then
 fi
 
 
+AM_CONDITIONAL(BUILD_STATIC, test "$enable_static" = "yes")
+
+
 #
 # Find pkg-config
 #
@@ -129,4 +132,8 @@ driver/Makefile
 examples/Makefile
 lib/Makefile
 include/Makefile
+proxy/Makefile
+proxy/dispatcher/Makefile
+proxy/requestor/Makefile
+rules/Makefile
 ], [chmod +x divine-config])
