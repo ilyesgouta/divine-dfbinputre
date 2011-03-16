@@ -11,7 +11,7 @@ spooky_SOURCES = spooky.c
 
 spooky_LDADD = \
 	$(top_builddir)/lib/libdivine.la	\
-	-lm
+	$(DIRECTFB_LIBS) -lm
 
 
 divine_test_SOURCES = divine-test.c
