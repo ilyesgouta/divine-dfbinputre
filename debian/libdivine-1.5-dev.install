@@ -1,0 +1,6 @@
+usr/bin/divine-config
+usr/include/divine/*.h
+usr/lib/directfb-*/inputdrivers/libdirectfb_divine.a
+usr/lib/libdivine.so
+usr/lib/libdivine.a
+usr/lib/pkgconfig/divine.pc
