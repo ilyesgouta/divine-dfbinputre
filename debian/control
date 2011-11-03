@@ -1,0 +1,47 @@
+Source: divine
+Priority: optional
+Maintainer: Andreas Shimokawa <andi@directfb.org>
+Uploaders: Andreas Shimokawa <andi@directfb.org>, Denis Oliver Kropp <dok@directfb.org>
+Build-Depends: debhelper (>= 7.4.15), autoconf, automake,
+ libtool, pkg-config, libdirectfb-dev
+Standards-Version: 3.9.0
+Section: libs
+Homepage: http://www.directfb.org/
+
+Package: libdirectfb-1.5-inputdriver-divine
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: DirectFB - divine input driver
+ DirectFB is a graphics library which was designed with embedded systems
+ in mind. It offers maximum hardware accelerated performance at a minimum
+ of resource usage and overhead.
+ .
+ This package contains the divine input driver
+
+Package: libdivine-1.5
+Architecture: any
+Depends: libdirectfb-1.5,
+ ${shlibs:Depends}, ${misc:Depends}
+Description: DiVine - DirectFB Virtual Input extension (shared library)
+  A library that handles the connection to the input driver
+  including helper functions for generating events.
+
+Package: libdivine-1.5-dev
+Architecture: any
+Depends: libdivine-1.5
+ ${shlibs:Depends}, ${misc:Depends}
+Provides: libdivine-dev
+Conflicts: libdivine-dev
+Description: DiVine - DirectFB Virtual Input extension (development package)
+  A library that handles the connection to the input driver
+  including helper functions for generating events.
+
+Package: divine-spooky-1.5
+Architecture: any
+Depends: libdivine-1.5,
+ ${shlibs:Depends}, ${misc:Depends}
+Provides: divine-spooky
+Conflicts: divine-spooky
+Description: DiVine - DirectFB Virtual Input extension ("spooky" example)
+  A tool to generate input events using a simple script featuring button or
+   motion events, linear or circular automated motion and delays.
