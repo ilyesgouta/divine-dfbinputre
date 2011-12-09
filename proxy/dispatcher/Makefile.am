@@ -10,7 +10,7 @@ INCLUDES = \
 	-I$(top_builddir)/lib		\
 	-I$(top_srcdir)/lib		\
 	-I$(top_srcdir)/proxy/requestor	\
-	$(DIRECTFB_INTERNAL_CFLAGS)	\
+	$(DIRECTFB_CFLAGS)	\
 	-DDATADIR=\"${RUNTIME_SYSROOT}@DATADIR@\"
 
 LIBS = \

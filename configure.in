@@ -77,50 +77,26 @@ AM_CONDITIONAL(BUILD_STATIC, test "$enable_static" = "yes")
 
 
 #
-# Find pkg-config
-#
-AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-if test x$PKG_CONFIG = xno ; then
-  AC_MSG_ERROR([*** pkg-config not found. See http://pkgconfig.sourceforge.net])
-fi
-
-if ! pkg-config --atleast-pkgconfig-version 0.9 ; then
-  AC_MSG_ERROR([*** pkg-config too old; version 0.9 or better required.])  
-fi
-
-
-#
-# Check for DirectFB
-#
-DIRECTFB_REQUIRED_VERSION=1.5.0
-
-AC_MSG_CHECKING(for DirectFB)
-  if $PKG_CONFIG --atleast-version $DIRECTFB_REQUIRED_VERSION directfb ; then
-        DIRECTFB_CFLAGS=`$PKG_CONFIG --cflags directfb`
-        DIRECTFB_LIBS=`$PKG_CONFIG --libs directfb`
-        AC_MSG_RESULT(found)
-  else
-    	AC_MSG_ERROR([*** DirectFB $DIRECTFB_REQUIRED_VERSION or newer is required. ])
-  fi
- 
-
-#
 # Check for DirectFB-Internal
 #
-AC_MSG_CHECKING(for DirectFB-Internal)
-  if $PKG_CONFIG --atleast-version $DIRECTFB_REQUIRED_VERSION directfb-internal ; then
-        MODULEDIR=$libdir/`$PKG_CONFIG --variable=moduledirname directfb-internal`
-        DIRECTFB_INTERNAL_CFLAGS=`$PKG_CONFIG --cflags directfb-internal`
-        AC_MSG_RESULT(found)
-  else
-    	AC_MSG_ERROR([*** DirectFB-Internal $DIRECTFB_REQUIRED_VERSION or newer is required. ])
-  fi
+DIRECTFB_REQUIRED_VERSION=1.6.0
+PKG_CHECK_MODULES(DIRECTFB, directfb-internal >= $DIRECTFB_REQUIRED_VERSION,[ MODULEDIRNAME=`$PKG_CONFIG --variable=moduledirname directfb-internal` ],
+	AC_MSG_ERROR([$DIRECTFB_PKG_ERRORS
+*** DirectFB-Internal $DIRECTFB_REQUIRED_VERSION or newer is required. The latest version
+*** of DirectFB is available from http://www.directfb.org/.]))
+
+if test -n "$MODULEDIRNAME"; then
+   MODULEDIR="$libdir/$MODULEDIRNAME"
+fi
+
+if test -z "$MODULEDIR"; then
+   AC_MSG_ERROR([*** MODULEDIR not set! Set to something like /usr/local/lib/directfb-1.6-0])
+fi
 
 
 AC_SUBST(DIRECTFB_CFLAGS)
 AC_SUBST(DIRECTFB_LIBS)
 AC_SUBST(MODULEDIR)
-AC_SUBST(DIRECTFB_INTERNAL_CFLAGS)
 
 CFLAGS="$CFLAGS -Werror-implicit-function-declaration"
 
@@ -137,3 +113,12 @@ proxy/dispatcher/Makefile
 proxy/requestor/Makefile
 rules/Makefile
 ], [chmod +x divine-config])
+
+
+AC_MSG_RESULT([
+Build options: 
+  Module directory       $MODULEDIR
+  Debug mode             $enable_debug
+  CFLAGS                 $CFLAGS
+])
+

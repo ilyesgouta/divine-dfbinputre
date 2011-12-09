@@ -1,6 +1,6 @@
 ## Makefile.am for DiVine/driver
 
-INCLUDES = @DIRECTFB_INTERNAL_CFLAGS@
+INCLUDES = @DIRECTFB_CFLAGS@
 
 divine_LTLIBRARIES = libdirectfb_divine.la
 
