@@ -17,7 +17,8 @@ spooky_LDADD = \
 divine_test_SOURCES = divine-test.c
 
 divine_test_LDADD = \
-	$(top_builddir)/lib/libdivine.la
+	$(top_builddir)/lib/libdivine.la  \
+	$(DIRECTFB_LIBS) -lm
 
 EXTRA_DIST = \
 	scroll_circle.spooky	\
